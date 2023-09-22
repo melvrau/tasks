@@ -6,7 +6,10 @@ import { Question, QuestionType } from "./interfaces/question";
  * that are `published`.
  */
 export function getPublishedQuestions(questions: Question[]): Question[] {
-    return [];
+    const publishedQs = questions.filter(
+        (question: Question): boolean => question.published === true
+    );
+    return publishedQs;
 }
 
 /**
@@ -15,7 +18,13 @@ export function getPublishedQuestions(questions: Question[]): Question[] {
  * `expected`, and an empty array for its `options`.
  */
 export function getNonEmptyQuestions(questions: Question[]): Question[] {
-    return [];
+    const nonEmpties = questions.filter(
+        (question: Question): boolean =>
+            question.body !== "" ||
+            question.expected !== "" ||
+            question.options.length !== 0
+    );
+    return nonEmpties;
 }
 
 /***
@@ -26,7 +35,14 @@ export function findQuestion(
     questions: Question[],
     id: number
 ): Question | null {
-    return null;
+    const givenQ = questions.find(
+        (question: Question): boolean => question.id === id
+    );
+    if (givenQ !== undefined) {
+        return givenQ;
+    } else {
+        return null;
+    }
 }
 
 /**
@@ -34,7 +50,10 @@ export function findQuestion(
  * with the given `id`.
  */
 export function removeQuestion(questions: Question[], id: number): Question[] {
-    return [];
+    const removedQ = questions.filter(
+        (question: Question): boolean => question.id !== id
+    );
+    return removedQ;
 }
 
 /***
@@ -42,14 +61,24 @@ export function removeQuestion(questions: Question[], id: number): Question[] {
  * questions, as an array.
  */
 export function getNames(questions: Question[]): string[] {
-    return [];
+    const namesOnly = questions.map(
+        (question: Question): string => question.name
+    );
+    return namesOnly;
 }
 
 /***
  * Consumes an array of questions and returns the sum total of all their points added together.
  */
 export function sumPoints(questions: Question[]): number {
-    return 0;
+    const pointsArr = questions.map(
+        (question: Question): number => question.points
+    );
+    const totalPoints = pointsArr.reduce(
+        (currTot: number, pointVal: number) => currTot + pointVal,
+        0
+    );
+    return totalPoints;
 }
 
 /***
